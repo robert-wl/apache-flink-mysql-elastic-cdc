@@ -10,32 +10,6 @@ services:
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager        
-
-  taskmanager:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - jobmanager
-    command: taskmanager
-    scale: 1
-    environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        taskmanager.numberOfTaskSlots: 30        
-  sql-client:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: bin/sql-client.sh
-    depends_on:
-      - jobmanager
-    environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        rest.address: jobmanager        
+        jobmanager.rpc.address: jobmanager             
 
 
