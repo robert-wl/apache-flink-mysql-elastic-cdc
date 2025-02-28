@@ -1,1 +1,3 @@
 temp.*
+mysql-to-elasticsearch.*
+!mysql-to-elasticsearch.example.yaml
