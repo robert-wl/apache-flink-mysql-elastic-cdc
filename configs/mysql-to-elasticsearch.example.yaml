@@ -1,0 +1,26 @@
+source:
+  type: mysql
+  hostname: localhost
+  port: 3306
+  username: 
+  password: 
+  tables: 
+  server-id: 5400
+
+sink:
+  type: elasticsearch
+  name: Elastic Sink
+  hosts: http://localhost:9200
+  username: 
+  password: 
+  version: 8
+  batch.size.max.bytes: 10485760
+  record.size.max.bytes: 10485760
+
+route:
+  - source-table: 
+    sink-table: 
+
+pipeline:
+  name: mysql-to-elasticsearch
+  parallelism: 2
