@@ -1,15 +1,35 @@
 version: "2.2"
 services:
   jobmanager:
+    container_name: jobmanager
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
     command: jobmanager
+    volumes:
+      - ./conf/config.yaml:/opt/flink/conf/config.yaml:ro
+      - ./cdc:/opt/flink/cdc
+      - ./configs:/opt/flink/configs
     environment:
       - |
         FLINK_PROPERTIES=
         jobmanager.rpc.address: jobmanager             
-
-
+    
+  taskmanager:
+    container_name: taskmanager
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    volumes:
+      - ./conf/config.yaml:/opt/flink/conf/config.yaml:ro
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 30   
